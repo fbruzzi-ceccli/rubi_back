@@ -51,6 +51,18 @@ app.use('/', route14);
 app.use('/', route15);
 app.use('/', route16);
 
+app.use('/', require('./api2/getDateKey.js'));
+app.use('/', require('./api2/getCalculators.js'));
+app.use('/', require('./api2/getLines.js'));
+app.use('/', require('./api2/getPanelAndSatellite.js'));
+app.use('/', require('./api2/getSoftwares.js'));
+app.use('/', require('./api2/getStops.js'));
+app.use('/', require('./api2/getAgents.js'));
+app.use('/', require('./api2/getPortables.js'));
+app.use('/', require('./api2/getVehicules2.js'));
+app.use('/', require('./api2/getMissions.js'));
+app.use('/', require('./api2/getMissionsCourses.js'));
+
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

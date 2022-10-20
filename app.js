@@ -62,6 +62,9 @@ app.use('/', require('./api2/getPortables.js'));
 app.use('/', require('./api2/getVehicules2.js'));
 app.use('/', require('./api2/getMissions.js'));
 app.use('/', require('./api2/getMissionsCourses.js'));
+app.use('/', require('./api2/getPanneaux.js'));
+app.use('/', require('./api2/getSecteurs.js'));
+app.use('/', require('./api2/getLinesServed.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

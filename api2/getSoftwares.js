@@ -10,9 +10,9 @@ router.get('/getSoftwares', (req, res) => {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
     res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
-    let cledat = req.query.dateKey;
+    const key = req.query.key;
     const sql = 'SELECT * FROM LogicielsDeployes ' +
-        `WHERE CleDat = ${cledat}`
+        `WHERE CleIdt = ${key}`
     con.query(sql, (err, results) => {
         if (err) throw err
         if (results.length > 0) {

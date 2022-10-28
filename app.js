@@ -67,6 +67,9 @@ app.use('/', require('./api2/getVehicles.js'));
 app.use('/', require('./api2/getSoftwares.js'));
 app.use('/', require('./api2/getSoftwaresTerminal.js'));
 app.use('/', require('./api2/getTerminals.js'));
+app.use('/', require('./api2/getPanneaux.js'));
+app.use('/', require('./api2/getSecteurs.js'));
+app.use('/', require('./api2/getLinesServed.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

@@ -5,7 +5,7 @@ const moment = require("moment/moment.js");
 
 var con = config.connection; 
 
-router.get('/getVehicules2', (req, res) => {
+router.get('/getVehicles2', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
@@ -15,10 +15,10 @@ router.get('/getVehicules2', (req, res) => {
     const time = Number(req.query.time);
     const cleDat = time ? moment(time).format('YYMMDD') : null;
 
-    const sql = "SELECT CleIdt, Identite, NumeroCarrosserie, (IF (NumeroCarrosserie REGEXP '[[:digit:]]+' = 'NULL', 999999, IF(NumeroCarrosserie*1 = 0, 999999, NumeroCarrosserie*1) )) as triabs " +
+    const sql = "SELECT CleIdt, Identite, NumeroCarrosserie " +
         `FROM Vehicules WHERE CleDat = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= ${cleDat ?? 'NOW()'}) ` +
         (id ? `AND CleIdt = ${id} ` : '') +
-        'ORDER BY triabs ASC, NumeroCarrosserie ASC ';
+        'ORDER BY NumeroCarrosserie ASC ';
 
     con.query(sql, (err, results) => {
         if (err) throw err

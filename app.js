@@ -59,13 +59,14 @@ app.use('/', require('./api2/getSoftwares.js'));
 app.use('/', require('./api2/getStops.js'));
 app.use('/', require('./api2/getAgents.js'));
 app.use('/', require('./api2/getPortables.js'));
-app.use('/', require('./api2/getVehicules2.js'));
+app.use('/', require('./api2/getVehicles2.js'));
 app.use('/', require('./api2/getMissions.js'));
 app.use('/', require('./api2/getMissionsCourses.js'));
 app.use('/', require('./api2/getUsers.js'));
-app.use('/', require('./api2/getVehicules.js'));
+app.use('/', require('./api2/getVehicles.js'));
 app.use('/', require('./api2/getSoftwares.js'));
 app.use('/', require('./api2/getSoftwaresTerminal.js'));
+app.use('/', require('./api2/getTerminals.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

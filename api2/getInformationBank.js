@@ -1,23 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const config = require("../config_DBRefr.js");
-const moment = require("moment/moment.js");
+const config = require("../config_DBRT.js");
 
 var con = config.connection; 
 
-router.get('/getVersions', (req, res) => {
+router.get('/getInformationBank', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
     res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
-    const time = Number(req.query.time);
-    const cleDat = time ? moment(time).format('YYMMDD') : null;
-    const type = req.query.type;
+    const vehicleKey = req.query.vehicleId;
 
-    const sql = 'SELECT Valeur FROM Versions ' + 
-        `WHERE Identification='${type}'` +
-        (cleDat ? `AND DateApplication = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= ${cleDat}) ` : '');
+    const sql = 'SELECT * FROM BanqueInformationLocaleDeployee ' + 
+        `WHERE AttVehicule='${vehicleKey}' ` +
+        'ORDER BY DateChargementFin DESC';
 
     console.log(sql);
 

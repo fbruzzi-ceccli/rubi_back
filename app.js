@@ -70,6 +70,13 @@ app.use('/', require('./api2/getTerminals.js'));
 app.use('/', require('./api2/getPanneaux.js'));
 app.use('/', require('./api2/getSecteurs.js'));
 app.use('/', require('./api2/getLinesServed.js'));
+app.use('/', require('./api2/getVersions.js'));
+app.use('/', require('./api2/getInformationBank.js'));
+app.use('/', require('./api2/getEmbeddedSoftware.js'));
+app.use('/', require('./api2/getConnectionHistory.js'));
+app.use('/', require('./api2/getPredPass.js'));
+app.use('/', require('./api2/getPathPoints.js'));
+app.use('/', require('./api2/getStopPassHistory.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

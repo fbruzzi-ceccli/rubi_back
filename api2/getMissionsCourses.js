@@ -16,10 +16,6 @@ router.get('/getMissionsCourses', (req, res) => {
     const cleD = moment(time).format('YYMMDD');
     const bitDay = 1;
 
-    console.log('time', time);
-    console.log('moment', moment(time))
-    console.log('testfb', cleD);
-
     const sql = 'SELECT m.CleIdt as CleMission, mc.CleIdt as CleCourse, m.NumeroMission, sv.CleIdt as CleSV, sv.NumeroService as NumSV, ' +
     'sa.CleIdt as CleSA, sa.NumeroService as NumSA, l.CodeLigneCommerciale, mc.NumeroCourse, mc.HeureDebut, mc.HeureFin, ' +
     'p1.NomPoint as NomPointDebut, p2.NomPoint as NomPointFin, ModeExploitation, sv.Nature FROM ' +

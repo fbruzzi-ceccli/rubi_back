@@ -5,22 +5,20 @@ const moment = require("moment/moment.js");
 
 var con = config.connection; 
 
-router.get('/getUnloading', (req, res) => {
+router.get('/getTechnicalWarnings', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
     res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
-    const fileType = req.query.fileType;
     const vehicleId = Number(req.query.vehicleId);
     const date = req.query.date;
     const pageIndex = req.query.pageIndex ?? 0;
     const pageSize = req.query.pageSize ?? 100;
 
     const whereClauses = [
-        fileType ? `TypeFichier = '${fileType}'` : undefined,
-        vehicleId ? `CleIdt = ${vehicleId}` : undefined,
-        date ? `DATE(DateDechargement) = '${moment(date).format('YYYY-MM-DD')}'` : undefined,
+        vehicleId ? `AttVhc = ${vehicleId}` : undefined,
+        date ? `DATE(DateHeure) = '${moment(date).format('YYYY-MM-DD')}'` : undefined,
     ].filter(c => c);
 
     let filter = '';
@@ -33,10 +31,10 @@ router.get('/getUnloading', (req, res) => {
     }
 
     const sql = `SELECT * , \
-        ( SELECT COUNT(*) as TotalCount FROM Dechargements ${filter} ) as TotalCount \
-        FROM Dechargements \
+        ( SELECT COUNT(*) as TotalCount FROM AlarmesTechniques ${filter} ) as TotalCount \
+        FROM AlarmesTechniques \
         ${filter} \
-        ORDER BY DateDechargement DESC \
+        ORDER BY DateHeure DESC \
         LIMIT ${pageIndex * pageSize}, ${pageSize}`;
 
     con.query(sql, (err, results) => {

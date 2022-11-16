@@ -77,6 +77,7 @@ app.use('/', require('./api2/getConnectionHistory.js'));
 app.use('/', require('./api2/getPredPass.js'));
 app.use('/', require('./api2/getPathPoints.js'));
 app.use('/', require('./api2/getStopPassHistory.js'));
+app.use('/', require('./api2/getUnloading.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

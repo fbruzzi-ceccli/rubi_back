@@ -80,6 +80,9 @@ app.use('/', require('./api2/getStopPassHistory.js'));
 app.use('/', require('./api2/getUnloading.js'));
 app.use('/', require('./api2/getTechnicalWarnings.js'));
 app.use('/', require('./api2/getCommunication.js'));
+app.use('/', require('./api2/getApplications.js'));
+app.use('/', require('./api2/getVehiclesTypes.js'));
+app.use('/', require('./api2/getScenario.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

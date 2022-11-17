@@ -79,6 +79,7 @@ app.use('/', require('./api2/getPathPoints.js'));
 app.use('/', require('./api2/getStopPassHistory.js'));
 app.use('/', require('./api2/getUnloading.js'));
 app.use('/', require('./api2/getTechnicalWarnings.js'));
+app.use('/', require('./api2/getCommunication.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

@@ -40,4 +40,28 @@ router.get('/getPanelAndSatellite', (req, res) => {
     })
 });
 
+// TO DO: Rename previous route
+router.get('/getPanelAndSatellite2', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+
+    const sql = `SELECT Identite, CleIdt, NumeroPanneau as Number, 'PAN' as Type FROM Panneaux \
+        WHERE CleDat = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= NOW()) \
+        UNION \
+        SELECT Identite, CleIdt, NumeroSatellite as Number, 'SAT' as Type FROM Satellites \
+        WHERE CleDat = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= NOW()) \
+        ORDER BY Type, Number`;
+
+    con.query(sql, (err, results) => {
+        if (err) throw err
+        if (results.length > 0) {
+            res.json(results)
+        } else {
+            res.send([]);
+        }
+    })
+});
+
 module.exports = router;

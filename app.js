@@ -84,6 +84,7 @@ app.use('/', require('./api2/getApplications.js'));
 app.use('/', require('./api2/getVehiclesTypes.js'));
 app.use('/', require('./api2/getScenario.js'));
 app.use('/', require('./api2/getSaphirParams.js'));
+app.use('/', require('./api2/getTerminalParams.js'));
 
 const PORT = process.env.APP_PORT || 8080;
 app.listen(PORT, () => {

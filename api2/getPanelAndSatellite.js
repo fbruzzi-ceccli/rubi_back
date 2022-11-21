@@ -47,12 +47,26 @@ router.get('/getPanelAndSatellite2', (req, res) => {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
     res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
-    const sql = `SELECT Identite, CleIdt, NumeroPanneau as Number, 'PAN' as Type FROM Panneaux \
-        WHERE CleDat = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= NOW()) \
-        UNION \
-        SELECT Identite, CleIdt, NumeroSatellite as Number, 'SAT' as Type FROM Satellites \
-        WHERE CleDat = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= NOW()) \
-        ORDER BY Type, Number`;
+
+    const pageIndex = req.query.pageIndex;
+    const pageSize = req.query.pageSize ?? 100;
+    const paginated = typeof pageIndex !== 'undefined';
+    const terminalId = req.query.terminalId;
+
+    const queryTerminalId = terminalId ? `AND CleIdt = ${terminalId}` : '';
+
+    const query1 = `FROM Panneaux WHERE CleDat = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= NOW()) ${queryTerminalId}`;
+    const query2 = `FROM Satellites WHERE CleDat = (SELECT MAX(CleDat) FROM Applications WHERE DateDebutApplication <= NOW()) ${queryTerminalId}`;
+
+    const sql = `SELECT Identite, CleIdt, NumeroPanneau as Number, 'PAN' as Type
+        ${paginated ? `,( SELECT COUNT(*) ${query1} ) as TotalCount` : '' }
+        ${query1}
+        UNION
+        SELECT Identite, CleIdt, NumeroSatellite as Number, 'SAT' as Type
+        ${paginated ? `,( SELECT COUNT(*) ${query2} ) as TotalCount` : '' }
+        ${query2}
+        ORDER BY Type, Number
+        ${paginated ? `LIMIT ${pageIndex * pageSize}, ${pageSize}` : ''}`;
 
     con.query(sql, (err, results) => {
         if (err) throw err
